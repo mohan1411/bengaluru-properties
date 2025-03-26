@@ -1,0 +1,928 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bengaluru Properties - Homes for Rent & Sale</title>
+    <style>
+        :root {
+            --primary-color: #2c3e50;
+            --secondary-color: #3498db;
+            --accent-color: #e74c3c;
+            --light-color: #ecf0f1;
+            --dark-color: #34495e;
+            --success-color: #2ecc71;
+            --text-color: #333;
+            --card-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            --transition: all 0.3s ease;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: #f5f7fa;
+            color: var(--text-color);
+            line-height: 1.6;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header Styles */
+        header {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 1rem 0;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+        }
+
+        .logo h1 {
+            font-size: 1.5rem;
+            margin-left: 10px;
+        }
+
+        .logo-icon {
+            font-size: 1.8rem;
+            color: var(--secondary-color);
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+        }
+
+        nav ul li {
+            margin-left: 1.5rem;
+        }
+
+        nav ul li a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            transition: var(--transition);
+            position: relative;
+        }
+
+        nav ul li a:hover {
+            color: var(--secondary-color);
+        }
+
+        nav ul li a::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -4px;
+            left: 0;
+            background-color: var(--secondary-color);
+            transition: var(--transition);
+        }
+
+        nav ul li a:hover::after {
+            width: 100%;
+        }
+
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            color: white;
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url('https://images.unsplash.com/photo-1582550740498-c2f2169d1b64?auto=format&fit=crop&q=80&w=1000') no-repeat center center/cover;
+            height: 60vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            color: white;
+            padding: 0 20px;
+        }
+
+        .hero-content h1 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .hero-content p {
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .search-bar {
+            display: flex;
+            max-width: 700px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 50px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .search-bar select, 
+        .search-bar input {
+            border: none;
+            padding: 15px;
+            background: transparent;
+            flex: 1;
+        }
+
+        .search-bar select {
+            padding-right: 30px;
+            border-right: 1px solid #e0e0e0;
+            appearance: none;
+            background: white url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="12" height="6"><path d="M0 0l6 6 6-6z" fill="%23666"/></svg>') no-repeat right 10px center;
+        }
+
+        .search-bar input {
+            flex: 2;
+        }
+
+        .search-btn {
+            background-color: var(--secondary-color);
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .search-btn:hover {
+            background-color: #2980b9;
+        }
+
+        /* Filter Section */
+        .filter-section {
+            background-color: white;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 10px;
+            box-shadow: var(--card-shadow);
+        }
+
+        .filter-options {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        .filter-group {
+            flex: 1;
+            min-width: 150px;
+        }
+
+        .filter-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: 500;
+            color: var(--dark-color);
+        }
+
+        .filter-group select,
+        .filter-group input {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+
+        .filter-toggle {
+            display: none;
+            width: 100%;
+            background-color: var(--primary-color);
+            color: white;
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-bottom: 10px;
+        }
+
+        /* Property Cards */
+        .property-section {
+            padding: 40px 0;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .section-header h2 {
+            font-size: 2rem;
+            color: var(--primary-color);
+            position: relative;
+            display: inline-block;
+        }
+
+        .section-header h2::after {
+            content: '';
+            position: absolute;
+            width: 50%;
+            height: 3px;
+            bottom: -10px;
+            left: 25%;
+            background-color: var(--secondary-color);
+        }
+
+        .property-type-tabs {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 30px;
+        }
+
+        .tab-button {
+            padding: 10px 25px;
+            background-color: transparent;
+            border: none;
+            border-bottom: 3px solid transparent;
+            font-size: 1rem;
+            font-weight: 600;
+            color: var(--dark-color);
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .tab-button.active {
+            border-bottom-color: var(--secondary-color);
+            color: var(--secondary-color);
+        }
+
+        .property-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 30px;
+        }
+
+        .property-card {
+            background-color: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: var(--card-shadow);
+            transition: var(--transition);
+        }
+
+        .property-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .property-image {
+            height: 200px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .property-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+
+        .property-card:hover .property-image img {
+            transform: scale(1.05);
+        }
+
+        .property-badge {
+            position: absolute;
+            top: 15px;
+            left: 15px;
+            padding: 5px 10px;
+            font-size: 0.8rem;
+            font-weight: bold;
+            border-radius: 4px;
+            z-index: 1;
+        }
+
+        .for-sale {
+            background-color: var(--accent-color);
+            color: white;
+        }
+
+        .for-rent {
+            background-color: var(--success-color);
+            color: white;
+        }
+
+        .property-info {
+            padding: 20px;
+        }
+
+        .property-price {
+            font-size: 1.4rem;
+            font-weight: bold;
+            color: var(--primary-color);
+            margin-bottom: 5px;
+        }
+
+        .price-per-sqft {
+            font-size: 0.9rem;
+            color: #666;
+            margin-bottom: 10px;
+        }
+
+        .property-title {
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-bottom: 10px;
+            line-height: 1.3;
+        }
+
+        .property-address {
+            color: #666;
+            font-size: 0.9rem;
+            margin-bottom: 15px;
+        }
+
+        .property-features {
+            display: flex;
+            justify-content: space-between;
+            padding-top: 15px;
+            border-top: 1px solid #eee;
+        }
+
+        .feature {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .feature span {
+            font-size: 0.9rem;
+            color: #666;
+        }
+
+        .feature strong {
+            font-size: 1.1rem;
+            color: var(--dark-color);
+        }
+
+        /* Popular Localities Section */
+        .localities-section {
+            padding: 40px 0;
+            background-color: #f8f9fa;
+        }
+
+        .locality-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 20px;
+        }
+
+        .locality-card {
+            border-radius: 10px;
+            overflow: hidden;
+            position: relative;
+            height: 150px;
+            box-shadow: var(--card-shadow);
+            transition: var(--transition);
+        }
+
+        .locality-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .locality-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .locality-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(to top, rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.3));
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            padding: 15px;
+            color: white;
+        }
+
+        .locality-name {
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-bottom: 3px;
+        }
+
+        .property-count {
+            font-size: 0.9rem;
+            opacity: 0.9;
+        }
+
+        /* CTA Section */
+        .cta-section {
+            background: linear-gradient(to right, var(--primary-color), var(--secondary-color));
+            color: white;
+            padding: 60px 0;
+            text-align: center;
+        }
+
+        .cta-content h2 {
+            font-size: 2rem;
+            margin-bottom: 15px;
+        }
+
+        .cta-content p {
+            max-width: 600px;
+            margin: 0 auto 30px;
+            font-size: 1.1rem;
+        }
+
+        .cta-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 12px 30px;
+            border: none;
+            border-radius: 5px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            text-decoration: none;
+        }
+
+        .btn-primary {
+            background-color: white;
+            color: var(--primary-color);
+        }
+
+        .btn-secondary {
+            background-color: transparent;
+            color: white;
+            border: 2px solid white;
+        }
+
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Footer */
+        footer {
+            background-color: var(--dark-color);
+            color: white;
+            padding: 50px 0 20px;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 30px;
+            margin-bottom: 30px;
+        }
+
+        .footer-column h3 {
+            font-size: 1.2rem;
+            margin-bottom: 20px;
+            position: relative;
+            padding-bottom: 10px;
+        }
+        
+        .footer-column h3::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            width: 50px;
+            height: 2px;
+            background-color: var(--secondary-color);
+        }
+
+        .footer-column ul {
+            list-style: none;
+        }
+
+        .footer-column ul li {
+            margin-bottom: 10px;
+        }
+
+        .footer-column ul li a {
+            color: #ccc;
+            text-decoration: none;
+            transition: var(--transition);
+        }
+
+        .footer-column ul li a:hover {
+            color: var(--secondary-color);
+            padding-left: 5px;
+        }
+
+        .social-links {
+            display: flex;
+            gap: 15px;
+            margin-top: 15px;
+        }
+
+        .social-links a {
+            display: inline-block;
+            width: 36px;
+            height: 36px;
+            background-color: rgba(255, 255, 255, 0.1);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: var(--transition);
+        }
+
+        .social-links a:hover {
+            background-color: var(--secondary-color);
+            transform: translateY(-3px);
+        }
+
+        .copyright {
+            text-align: center;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            font-size: 0.9rem;
+            color: #aaa;
+        }
+
+        /* Responsive Styles */
+        @media (max-width: 992px) {
+            .hero-content h1 {
+                font-size: 2rem;
+            }
+            
+            .property-grid {
+                grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            }
+        }
+
+        @media (max-width: 768px) {
+            .header-content {
+                position: relative;
+            }
+            
+            .mobile-menu-btn {
+                display: block;
+            }
+            
+            nav ul {
+                position: absolute;
+                flex-direction: column;
+                background-color: var(--primary-color);
+                width: 100%;
+                top: 100%;
+                left: 0;
+                padding: 20px;
+                box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+                transform: translateY(-150%);
+                opacity: 0;
+                transition: var(--transition);
+                z-index: -1;
+            }
+            
+            nav ul.active {
+                transform: translateY(0);
+                opacity: 1;
+                z-index: 100;
+            }
+            
+            nav ul li {
+                margin: 10px 0;
+            }
+            
+            .filter-toggle {
+                display: block;
+            }
+            
+            .filter-options {
+                display: none;
+            }
+            
+            .filter-options.active {
+                display: flex;
+            }
+            
+            .search-bar {
+                flex-direction: column;
+                border-radius: 10px;
+            }
+            
+            .search-bar select, 
+            .search-bar input {
+                border-right: none;
+                border-bottom: 1px solid #e0e0e0;
+            }
+            
+            .tab-button {
+                padding: 8px 15px;
+                font-size: 0.9rem;
+            }
+            
+            .cta-buttons {
+                flex-direction: column;
+                gap: 10px;
+            }
+            
+            .btn {
+                width: 100%;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .hero {
+                height: 70vh;
+            }
+            
+            .hero-content h1 {
+                font-size: 1.5rem;
+            }
+            
+            .hero-content p {
+                font-size: 1rem;
+            }
+            
+            .section-header h2 {
+                font-size: 1.5rem;
+            }
+            
+            .property-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .locality-cards {
+                grid-template-columns: 1fr;
+            }
+            
+            .footer-content {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container header-content">
+            <div class="logo">
+                <span class="logo-icon">🏡</span>
+                <h1>Bengaluru Properties</h1>
+            </div>
+            <button class="mobile-menu-btn">☰</button>
+            <nav>
+                <ul>
+                    <li><a href="#">Home</a></li>
+                    <li><a href="#">Buy</a></li>
+                    <li><a href="#">Rent</a></li>
+                    <li><a href="#">Sell</a></li>
+                    <li><a href="#">About</a></li>
+                    <li><a href="#">Contact</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <section class="hero">
+        <div class="hero-content">
+            <h1>Find Your Dream Home in Bengaluru</h1>
+            <p>Discover the perfect property from thousands of listings across Bengaluru's most desirable neighborhoods</p>
+            <div class="search-bar">
+                <select>
+                    <option>Buy</option>
+                    <option>Rent</option>
+                </select>
+                <input type="text" placeholder="Search by locality, landmark, project...">
+                <button class="search-btn">Search</button>
+            </div>
+        </div>
+    </section>
+
+    <div class="container">
+        <section class="filter-section">
+            <button class="filter-toggle">Show Filters ▼</button>
+            <div class="filter-options">
+                <div class="filter-group">
+                    <label>Property Type</label>
+                    <select>
+                        <option>All Types</option>
+                        <option>Apartment</option>
+                        <option>Villa</option>
+                        <option>House</option>
+                        <option>Plot</option>
+                        <option>Commercial</option>
+                    </select>
+                </div>
+                <div class="filter-group">
+                    <label>Budget</label>
+                    <select>
+                        <option>All Prices</option>
+                        <option>Under ₹50 Lakh</option>
+                        <option>₹50 Lakh - ₹1 Cr</option>
+                        <option>₹1 Cr - ₹2 Cr</option>
+                        <option>₹2 Cr - ₹5 Cr</option>
+                        <option>Above ₹5 Cr</option>
+                    </select>
+                </div>
+                <div class="filter-group">
+                    <label>Bedrooms</label>
+                    <select>
+                        <option>Any</option>
+                        <option>1 BHK</option>
+                        <option>2 BHK</option>
+                        <option>3 BHK</option>
+                        <option>4+ BHK</option>
+                    </select>
+                </div>
+                <div class="filter-group">
+                    <label>Location</label>
+                    <select>
+                        <option>All Locations</option>
+                        <option>Electronic City</option>
+                        <option>Whitefield</option>
+                        <option>HSR Layout</option>
+                        <option>Koramangala</option>
+                        <option>Indiranagar</option>
+                        <option>Sarjapur Road</option>
+                    </select>
+                </div>
+                <div class="filter-group">
+                    <label>Area (sq ft)</label>
+                    <select>
+                        <option>Any</option>
+                        <option>Below 1000</option>
+                        <option>1000 - 1500</option>
+                        <option>1500 - 2000</option>
+                        <option>2000 - 3000</option>
+                        <option>Above 3000</option>
+                    </select>
+                </div>
+            </div>
+        </section>
+
+        <section class="property-section">
+            <div class="section-header">
+                <h2>Featured Properties</h2>
+            </div>
+            <div class="property-type-tabs">
+                <button class="tab-button active">All</button>
+                <button class="tab-button">For Sale</button>
+                <button class="tab-button">For Rent</button>
+            </div>
+            <div class="property-grid">
+                <!-- Property 1 - For Sale -->
+                <div class="property-card">
+                    <div class="property-image">
+                        <span class="property-badge for-sale">For Sale</span>
+                        <img src="https://images.unsplash.com/photo-1600566753190-17f0baa2a6c3?auto=format&fit=crop&q=80&w=1000" alt="Premium Apartment in Electronic City">
+                    </div>
+                    <div class="property-info">
+                        <div class="property-price">₹1.15 Cr</div>
+                        <div class="price-per-sqft">₹7,800/sqft</div>
+                        <h3 class="property-title">Premium 3 BHK Apartment in Electronic City</h3>
+                        <p class="property-address">Brigade Tech Gardens, Electronic City Phase 1, Bengaluru</p>
+                        <div class="property-features">
+                            <div class="feature">
+                                <strong>3</strong>
+                                <span>Beds</span>
+                            </div>
+                            <div class="feature">
+                                <strong>2</strong>
+                                <span>Baths</span>
+                            </div>
+                            <div class="feature">
+                                <strong>1475</strong>
+                                <span>Sq.ft</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Property 2 - For Rent -->
+                <div class="property-card">
+                    <div class="property-image">
+                        <span class="property-badge for-rent">For Rent</span>
+                        <img src="https://images.unsplash.com/photo-1625602812206-5ec545ca1231?auto=format&fit=crop&q=80&w=1000" alt="Modern Apartment in Whitefield">
+                    </div>
+                    <div class="property-info">
+                        <div class="property-price">₹45,000/month</div>
+                        <div class="price-per-sqft">₹28/sqft/month</div>
+                        <h3 class="property-title">Modern 2 BHK Apartment in Whitefield</h3>
+                        <p class="property-address">Prestige Shantiniketan, Whitefield, Bengaluru</p>
+                        <div class="property-features">
+                            <div class="feature">
+                                <strong>2</strong>
+                                <span>Beds</span>
+                            </div>
+                            <div class="feature">
+                                <strong>2</strong>
+                                <span>Baths</span>
+                            </div>
+                            <div class="feature">
+                                <strong>1200</strong>
+                                <span>Sq.ft</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Property 3 - For Sale -->
+                <div class="property-card">
+                    <div class="property-image">
+                        <span class="property-badge for-sale">For Sale</span>
+                        <img src="https://images.unsplash.com/photo-1564013799919-ab600027ffc6?auto=format&fit=crop&q=80&w=1000" alt="Luxury Villa in Sarjapur Road">
+                    </div>
+                    <div class="property-info">
+                        <div class="property-price">₹3.5 Cr</div>
+                        <div class="price-per-sqft">₹10,000/sqft</div>
+                        <h3 class="property-title">Luxury 4 BHK Villa in Sarjapur Road</h3>
+                        <p class="property-address">Adarsh Palm Retreat, Sarjapur Road, Bengaluru</p>
+                        <div class="property-features">
+                            <div class="feature">
+                                <strong>4</strong>
+                                <span>Beds</span>
+                            </div>
+                            <div class="feature">
+                                <strong>4</strong>
+                                <span>Baths</span>
+                            </div>
+                            <div class="feature">
+                                <strong>3500</strong>
+                                <span>Sq.ft</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Property 4 - For Rent -->
+                <div class="property-card">
+                    <div class="property-image">
+                        <span class="property-badge for-rent">For Rent</span>
+                        <img src="https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?auto=format&fit=crop&q=80&w=1000" alt="Fully Furnished Apartment in Koramangala">
+                    </div>
+                    <div class="property-info">
+                        <div class="property-price">₹65,000/month</div>
+                        <div class="price-per-sqft">₹32/sqft/month</div>
+                        <h3 class="property-title">Fully Furnished 3 BHK Apartment in Koramangala</h3>
+                        <p class="property-address">Sobha Classic, Koramangala 3rd Block, Bengaluru</p>
+                        <div class="property-features">
+                            <div class="feature">
+                                <strong>3</strong>
+                                <span>Beds</span>
+                            </div>
+                            <div class="feature">
+                                <strong>3</strong>
+                                <span>Baths</span>
+                            </div>
+                            <div class="feature">
+                                <strong>2025</strong>
+                                <span>Sq.ft</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Property 5 - For Sale -->
+                <div class="property-card">
+                    <div class="property-image">
+                        <span class="property-badge for-sale">For Sale</span>
+                        <img src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&q=80&w=1000" alt="Spacious Apartment in Indiranagar">
+                    </div>
+                    <div class="3 {
+            font-size: 1.2rem;
+            margin-bottom: 20px;
+            position: relative;
+            padding-bottom: 10px;
+        }
+
+        .footer-column h
